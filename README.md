@@ -55,6 +55,8 @@ sudo reboot                   Save and reboot
 ```
 
 **AutoRun**
+
+Follow it if you want the code autorun when raspi is rebooted
 ```
 sudo nano ~/.config/lxsession/LXDE-pi/autostart
 @sudo /usr/bin/python /home/pi/iBeacon-Scanner-/testblescan.py    add it below
