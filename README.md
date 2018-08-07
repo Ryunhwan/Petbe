@@ -54,7 +54,7 @@ sudo hciconfig hci0 down      Connect down Inner Bluetooth
 sudo reboot                   Save and reboot
 ```
 
-**2. AutoRun**
+**3. AutoRun**
 
 Follow it if you want the code autorun when raspi is rebooted
 ```
