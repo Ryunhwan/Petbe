@@ -17,7 +17,7 @@ The file is executed on Raspberry Pi.
 
 ## Configuration
 
-[**Scanning System Install**](http://www.switchdoc.com/2014/08/ibeacon-raspberry-pi-scanner-python/)
+[**1. Scanning System Install**](http://www.switchdoc.com/2014/08/ibeacon-raspberry-pi-scanner-python/)
 ```sh
 sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install libusb-dev
@@ -40,7 +40,7 @@ sudo apt-get install python-bluez
 sudo shutdown -r now
 ```
 
-**Mount Dongle**
+**2. Mount Dongle**
 
 First, insert a dongle on Raspi any USB port
 ```
@@ -54,7 +54,7 @@ sudo hciconfig hci0 down      Connect down Inner Bluetooth
 sudo reboot                   Save and reboot
 ```
 
-**AutoRun**
+**2. AutoRun**
 
 Follow it if you want the code autorun when raspi is rebooted
 ```
