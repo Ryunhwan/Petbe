@@ -45,7 +45,7 @@ sudo shutdown -r now
 First, insert a dongle on Raspi any USB port
 ```
 lsusb                         Check dongle connect
-hciconfig                     Check dongle port number(Maybe inner Bluetooth is hci0, new dongle is hci1) 
+hciconfig                     Check dongle port number(inner Bluetooth is hci0, new dongle is hci1) 
 ```
 
 Swap two port number. if you skip, you'll get an error in code 
