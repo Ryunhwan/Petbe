@@ -50,7 +50,7 @@ hciconfig                     Check dongle port number(inner Bluetooth is hci0, 
 
 Swap two port number. if you skip, you'll get an error in code 
 ```
-sudo hciconfig hci0 down      Connect down Inner Bluetooth
+sudo hciconfig hci0 down      Connect down inner Bluetooth
 sudo reboot                   Save and reboot
 ```
 
