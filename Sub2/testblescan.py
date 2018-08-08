@@ -1,4 +1,4 @@
-port = 8017
+port = 8001
 # test BLE Scanning software
 # One Raspberry Pi3 B+ model connected with two beacon
 # 7/23/2018
@@ -20,7 +20,7 @@ DeviceName = "S2" #Sub raspi2, Waiting motion detect
 
 # Create socket (client)
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #create socket
-hostip = '192.168.1.52' #Server ip address
+hostip = '192.168.1.150' #Server ip address
 #port = 8031 #port number, must be same with server's
 while True:
         try:
