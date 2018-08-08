@@ -1,6 +1,6 @@
 # Petbe
 
-The project Petbe is tracking Pet's location in home using 3 Raspi(Beacon signal scanner). A Beacon attach with users pet, 3 scanner track it.
+The project Petbe is tracking Pet's location in home using 3 Raspi(Beacon signal scanner). A Beacon attach on pet, 3 scanner track it.
 
 ## Contents
 
