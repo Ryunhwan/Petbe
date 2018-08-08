@@ -8,7 +8,7 @@ The project Petbe is tracking Pet's location in home using 3 Raspi(Beacon signal
 * Sub1
 * Sub2
 
-The file is executed on Raspberry Pi.
+The file is executed on Raspberry Pi, Python
 
 ## Hardware Spec
 * Raspberry Pi 3 model B+
