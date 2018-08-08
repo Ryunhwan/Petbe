@@ -40,7 +40,7 @@ sudo apt-get install python-bluez
 sudo shutdown -r now
 ```
 
-**2. Mount Dongle**
+**2. Mount BLE Dongle**
 
 First, insert a dongle on Raspi any USB port
 ```
