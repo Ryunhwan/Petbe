@@ -75,7 +75,7 @@ Main(server): `192.168.1.150`, Sub1 is `192.168.1.151`, and Sub2 is `192.168.1.1
 sudo nano /etc/dhcpcd.conf                open setting script
 netstat -nr                               check the router address
 ```
-And setting like below
+Add below code on `dhcpcd.conf`
 ```
 interface wlan0
 static ip_address=192.168.x.xxx/24        static address you want
