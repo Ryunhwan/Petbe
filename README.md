@@ -66,9 +66,11 @@ And save the file use `control + x`(Nano editor save key)
 sudo chmod +x /home/pi/iBeacon-Scanner-/testblescan.py            add execute permission
 ```
 
-**4. Static Ip Setting**
+**4. Static IP Address Setting**
 
-Raspies are have to connected with one router, so I set a static IP adress for each Raspi. It is not essential part of project, but if you want, follow it!
+Raspies are have to connected with one router, so I set a static IP adress for each Raspi.
+
+Main(server): `192.168.1.150`, Sub1 is `192.168.1.151`, and Sub2 is `192.168.1.152`
 ```
 sudo nano /etc/dhcpcd.conf                open setting script
 netstat -nr                               check the router address
