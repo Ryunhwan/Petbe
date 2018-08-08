@@ -72,10 +72,10 @@ Raspies are have to connected with one router, so I set a static IP adress for e
 
 Main(server): `192.168.1.150`, Sub1 is `192.168.1.151`, and Sub2 is `192.168.1.152`
 ```
-sudo nano /etc/dhcpcd.conf                open setting script
 netstat -nr                               check the router address
+sudo nano /etc/dhcpcd.conf                open setting script
 ```
-Add below code on `dhcpcd.conf`
+Add below code on script
 ```
 interface wlan0
 static ip_address=192.168.x.xxx/24        static address you want
