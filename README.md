@@ -68,7 +68,7 @@ sudo chmod +x /home/pi/iBeacon-Scanner-/testblescan.py            add execute pe
 
 **4. Static Ip Setting**
 
-Raspies are have to connected with one router, so I set a statuc IP adress for each Raspi. It is not essential part of project, but if you want, follow it!
+Raspies are have to connected with one router, so I set a static IP adress for each Raspi. It is not essential part of project, but if you want, follow it!
 ```
 sudo nano /etc/dhcpcd.conf                open setting script
 netstat -nr                               check the router address
