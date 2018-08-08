@@ -56,7 +56,7 @@ sudo reboot                        Save and reboot
 
 **3. AutoRun**
 
-Follow it if you want the code autorun when raspi is rebooted
+Follow it if you want the python script autorun when raspi is rebooted
 ```
 sudo nano ~/.config/lxsession/LXDE-pi/autostart                   open autostart script
 @sudo /usr/bin/python /home/pi/iBeacon-Scanner-/testblescan.py    add it below
@@ -68,7 +68,7 @@ sudo chmod +x /home/pi/iBeacon-Scanner-/testblescan.py            add execute pe
 
 **4. Static IP Address Setting**
 
-Raspies are have to connected with one router, so I set a static IP adress for each Raspi.
+Raspies are have to connected with one router, so I set a static IP address for each Raspi.
 
 Main(server): `192.168.1.150`, Sub1 is `192.168.1.151`, and Sub2 is `192.168.1.152`
 ```
