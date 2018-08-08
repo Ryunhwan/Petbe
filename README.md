@@ -44,14 +44,14 @@ sudo shutdown -r now
 
 First, insert a dongle on Raspi any USB port
 ```
-lsusb                         Check dongle connect
-hciconfig                     Check dongle port number(maybe inner Bluetooth is hci0, dongle is hci1)
+lsusb                                    Check dongle connect
+hciconfig                                Check dongle port number(maybe inner Bluetooth is hci0, dongle is hci1)
 ```
 
 Swap two port number. if you skip, you'll get an error in code 
 ```
-sudo hciconfig hci0 down      Connect down inner Bluetooth
-sudo reboot                   Save and reboot
+sudo hciconfig hci0 down                 Connect down inner Bluetooth
+sudo reboot                              Save and reboot
 ```
 
 **3. AutoRun**
@@ -82,5 +82,5 @@ static domain_name_servers=192.168.x.x    same with above
 ```
 And save the file use `control + x`(Nano editor save key)
 ```
-sudo reboot                   Save and reboot
+sudo reboot                                Save and reboot
 ```
