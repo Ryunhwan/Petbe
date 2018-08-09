@@ -20,18 +20,18 @@ from numpy import *
 from filter import *
 
 HOST = '192.168.1.150' #Server ip address
-PORT1 = 8000 #same with Sub1
-PORT2 = 8001 #same with Sub2
+PORT1 = 8004 #same with Sub1
+PORT2 = 8005 #same with Sub2
 deviceId = 1 #device id. only main raspi, every user's different
 
 # Create socket1. Communicate with Sub1
 s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #create socket
 print 'Socket1 Created!'
 try:
-	s1.bind( (HOST,PORT1) )
+        s1.bind( (HOST,PORT1) )
 except socket.error:
-	print 'Bind Failed..'
-	sys.exit()
+        print 'Bind Failed..'
+        sys.exit()
 s1.listen(2)
 print '..Socket Awaiting Messages..'
 (conn1, addr1) = s1.accept()
@@ -114,12 +114,12 @@ x____KF[0] = y__0.item(0,0)
 
 dev_id = 0
 try:
-	sock = bluez.hci_open_dev(dev_id)
-	print "ble thread started"
+        sock = bluez.hci_open_dev(dev_id)
+        print "ble thread started"
 
 except:
-	print "error accessing bluetooth device..."
-    	sys.exit(1)
+        print "error accessing bluetooth device..."
+        sys.exit(1)
 
 blescan.hci_le_set_scan_parameters(sock)
 blescan.hci_enable_le_scan(sock)
@@ -146,14 +146,14 @@ petStatus = post['status'] # get before status from server
 
 # send data to server using device id and pet status
 def sendStatus(device, status):
-	res = requests.post('http://114.108.81.223:3000/setStatus', headers=headers, data=json.dumps({'rpiId':deviceId, 'status':petStatus}))
+        res = requests.post('http://114.108.81.223:3000/setStatus', headers=headers, data=json.dumps({'rpiId':deviceId, 'status':petStatus}))
 
 # get distance data from sub1 and sub2
 def mappingdatafromSubs():
-	global sub1_ble1
-	global sub1_ble2
-	global sub2_ble1
-	global sub2_ble2
+        global sub1_ble1
+        global sub1_ble2
+        global sub2_ble1
+        global sub2_ble2
         data = conn1.recv(1024)
         if len(data) < 1:
                 return 0
@@ -193,7 +193,7 @@ def checkEat(r,t): #1
         global petStatus
         global eatstartTime
         range = r
-	keeptime = t
+        keeptime = t
         if sub1_ble1 <= range and petStatus != 1 and eatstartTime == datetime.datetime(2018,1,1) :
                 print "start counting eat time"
                 eatstartTime = datetime.datetime.now()
@@ -218,7 +218,7 @@ def checkWait(r,t): #2
         global petStatus
         global waitstartTime
         range = r
-	keeptime = t
+        keeptime = t
         if sub2_ble1 <= range and petStatus != 2 and waitstartTime == datetime.datetime(2018,1,1) :
                 print "start counting wait time"
                 waitstartTime = datetime.datetime.now()
@@ -243,10 +243,10 @@ def checkSleep(r,t,pdist): #3
         global petStatus
         global sleepstartTime
         range = r
-	keeptime = t
-	if pdist == 0: #starting value
-		return 0
-	distgap = abs(main_ble1 - pdist)
+        keeptime = t
+        if pdist == 0: #starting value
+                return 0
+        distgap = abs(main_ble1 - pdist)
         if main_ble1 <= range and distgap < 0.1 and petStatus != 3 and sleepstartTime == datetime.datetime(2018,1,1) :
                 print "start counting sleep time"
                 sleepstartTime = datetime.datetime.now()
@@ -271,7 +271,7 @@ def checkTrouble(r,t): #4
         global petStatus
         global troublestartTime
         range = r
-	keeptime = t
+        keeptime = t
         dist = ( (main_ble2-main_ble1)**2+(sub1_ble2-sub1_ble1)**2+(sub2_ble2-sub2_ble1)**2 )**0.5
         print "distance between dog and trouble area: ", dist
         if dist <= range and petStatus != 4 and troublestartTime == datetime.datetime(2018,1,1) :
@@ -294,46 +294,68 @@ def checkTrouble(r,t): #4
                 sendStatus(deviceId, petStatus)
                 return 0
 
-while True:
-	_x = 0 # filtering value of beacon1's RSSI
-	__x = 0 # filtering value of DISTANCE between raspi and beacon1
-	_y = 0 # filtering value of beacon2's RSSI
-	__y = 0 # filtering value of DISTANCE between raspi and beacon2
-	past_sub1_ble1 = sub1_ble1
-	past_sub1_ble2 = sub1_ble2
-	past_sub2_ble1 = sub2_ble1
-	past_sub2_ble2 = sub2_ble2
-	past_main_ble1 = main_ble1
-	past_main_ble2 = main_ble2
+def resultWindow():
+        print " ----- RESULT -----"
+        print datetime.datetime.now()
+        print "main_ble1: ", main_ble1
+        print "main_ble2: ", main_ble2
+        print "sub1_ble1: ", sub1_ble1
+        print "sub1_ble2: ", sub1_ble2
+        print "sub2_ble1: ", sub2_ble1
+        print "sub2_ble2: ", sub2_ble2
+        print "==================="
+        if petStatus == 0:
+                print "plain status"
+        elif petStatus == 1:
+                print "eat status"
+        elif petStatus == 2:
+                print "wait status"
+        elif petStatus == 3:
+                print "sleep status"
+        elif petStatus == 4:
+                print "trouble status"
+        print "==================="
 
-	returnedList = blescan.parse_events_get_distance(sock, 100)
-	n = len(returnedList)
-	for i in range(n) :
-		dummyList = returnedList[i].split(',') # [0]:MAC Addr / [1]:Major number / [2]:Tx Power / [3]:RSSI
-		#if "da:66:3d:70:27:1f" == dummyList[0]: # Trouble Location Beacon
-		#	#print "----- mint estimote(", dummyList[0], ") -----"
+while True:
+        _x = 0 # filtering value of beacon1's RSSI
+        __x = 0 # filtering value of DISTANCE between raspi and beacon1
+        _y = 0 # filtering value of beacon2's RSSI
+        __y = 0 # filtering value of DISTANCE between raspi and beacon2
+        past_sub1_ble1 = sub1_ble1
+        past_sub1_ble2 = sub1_ble2
+        past_sub2_ble1 = sub2_ble1
+        past_sub2_ble2 = sub2_ble2
+        past_main_ble1 = main_ble1
+        past_main_ble2 = main_ble2
+
+        returnedList = blescan.parse_events_get_distance(sock, 100)
+        n = len(returnedList)
+        for i in range(n) :
+                dummyList = returnedList[i].split(',') # [0]:MAC Addr / [1]:Major number / [2]:Tx Power / [3]:RSSI
+                #if "da:66:3d:70:27:1f" == dummyList[0]: # Trouble Location Beacon
+                #       #print "----- mint estimote(", dummyList[0], ") -----"
                 if "10:ce:a9:f5:68:4a" == dummyList[0]: # Trouble Location Beacon
                         #print "----- mint estimote(", dummyList[0], ") -----"
-			#print "not smoothing rssi: ", dummyList[3]
-			rssi = float(dummyList[3])
-			_x = filter_KF_mint_estimote.update(rssi) #filtering mint estimote rssi
-		        a_KF[i] = _x.item(2,0) #filtering value
-		        v_KF[i] = _x.item(1,0)
-		        x_KF[i] = _x.item(0,0)
-			sm_rssi = float(_x.item(2,0))
-			#print "RSSI: ", sm_rssi
-			tx = float(dummyList[2])
-			squareRoot = (tx-sm_rssi)/20
-			#print "squareRoot: ", squareRoot
-			distance = 10 ** squareRoot
-			#print "not smoothing distance: ", distance
-			__x = filter_KF_mint_distance.update(distance) #filtering distance between raspi and beacon1
+                        #print "not smoothing rssi: ", dummyList[3]
+                        rssi = float(dummyList[3])
+                        _x = filter_KF_mint_estimote.update(rssi) #filtering mint estimote rssi
+                        a_KF[i] = _x.item(2,0) #filtering value
+                        v_KF[i] = _x.item(1,0)
+                        x_KF[i] = _x.item(0,0)
+                        sm_rssi = float(_x.item(2,0))
+                        #print "RSSI: ", sm_rssi
+                        tx = float(dummyList[2])
+                        squareRoot = (tx-sm_rssi)/20
+                        #print "squareRoot: ", squareRoot
+                        distance = 10 ** squareRoot
+                        #print "not smoothing distance: ", distance
+                        __x = filter_KF_mint_distance.update(distance) #filtering distance between raspi and beacon1
                         a__KF[i] = __x.item(2,0) #filtering value
                         v__KF[i] = __x.item(1,0)
                         x__KF[i] = __x.item(0,0)
-			sm_distance = float(__x.item(2,0))
-			#print "Distance: ", sm_distance, "\n"
-			main_ble2 = sm_distance
+                        sm_distance = float(__x.item(2,0))
+                        #print "Distance: ", sm_distance, "\n"
+                        main_ble2 = sm_distance
                 elif "94:e3:6d:54:96:7c" == dummyList[0]: # Dog Beacon
                         #print "----- deepblue estimote(", dummyList[0], ") -----"
                         #print "not smoothing rssi: ", dummyList[3]
@@ -355,68 +377,13 @@ while True:
                         x____KF[i] = __y.item(0,0)
                         sm_distance = float(__y.item(2,0))
                         #print "Distance: ", sm_distance, "\n"
-			main_ble1 = sm_distance
-	#get data from two sub raspberry pi
-	mappingdatafromSubs()
-
-#	data = conn1.recv(1024)
-#	if len(data) < 1:
-#		continue
-#	connList = data.split('&')
-#	n = len(connList)
-#	for i in range(n):
-#		dummyList = connList[i].split('@')
-#		if len(dummyList) != 3:
-#			break
-#		if len(dummyList[2]) < 1:
-#			break
-#		if dummyList[0] == "S1" and dummyList[1] == "toTrouble":
-#			dist = float(dummyList[2])
-#			sub1_ble2 = dist
-#		elif dummyList[0] == "S1" and dummyList[1] == "toDog":
-#			dist = float(dummyList[2])
-#			sub1_ble1 = dist
-#
-#	data = conn2.recv(1024)
-#	if len(data) < 1:
-#		continue
-#	connList = data.split('&')
-#	n = len(connList)
-#	for i in range(n):
-#		dummyList = connList[i].split('@')
-#		if len(dummyList) != 3:
-#			break
-#		if len(dummyList[2]) < 1:
-#			break
-#		if dummyList[0] == "S2" and dummyList[1] == "toTrouble":
-#			dist = float(dummyList[2])
-#			sub2_ble2 = dist
-#		elif dummyList[0] == "S2" and dummyList[1] == "toDog":
-#			dist = float(dummyList[2])
-#			sub2_ble1 = dist
-
-	checkEat(0.15,5) #range(meter), stay time(sec)
-	checkWait(0.15,10) #range(meter), stay time(sec)
-	checkSleep(0.15,10,past_main_ble1) #range(meter), stay time(sec), last queue distance(main to dog)
-	checkTrouble(0.8,10) #range(meter), stay time(sec)
-
-	print " ----- RESULT -----"
-	print datetime.datetime.now()
-	print "main_ble1: ", main_ble1
-	print "main_ble2: ", main_ble2
-	print "sub1_ble1: ", sub1_ble1
-	print "sub1_ble2: ", sub1_ble2
-	print "sub2_ble1: ", sub2_ble1
-	print "sub2_ble2: ", sub2_ble2
-	print "==================="
-	if petStatus == 0:
-		print "plain status"
-	elif petStatus == 1:
-		print "eat status"
-	elif petStatus == 2:
-		print "wait status"
-	elif petStatus == 3:
-		print "sleep status"
-	elif petStatus == 4:
-		print "trouble status"
-	print "==================="
+                        main_ble1 = sm_distance
+        #get data from two sub raspberry pi
+        mappingdatafromSubs()
+        #check status and send status number to server
+        checkEat(0.1,5) #range(meter), stay time(sec)
+        checkWait(0.1,10) #range(meter), stay time(sec)
+        checkSleep(0.1,10,past_main_ble1) #range(meter), stay time(sec), last queue distance(main to dog)
+        checkTrouble(0.8,10) #range(meter), stay time(sec)
+        #to monitoring logs
+        resultWindow()
