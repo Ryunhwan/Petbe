@@ -20,8 +20,8 @@ from numpy import *
 from filter import *
 
 HOST = '192.168.1.150' #Server ip address
-PORT1 = 8004 #same with Sub1
-PORT2 = 8005 #same with Sub2
+PORT1 = 8000 #same with Sub1
+PORT2 = 8001 #same with Sub2
 deviceId = 1 #device id. only main raspi, every user's different
 
 # Create socket1. Communicate with Sub1
