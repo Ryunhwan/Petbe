@@ -68,7 +68,7 @@ sudo chmod +x /home/pi/iBeacon-Scanner-/testblescan.py            add execute pe
 
 **4. Static IP Address Setting**
 
-Raspies are have to connected with one router, so I set a static IP address for each Raspi.
+Raspies are have to connected with one router, so I set a static IP address for each Raspi
 
 Main(server): `192.168.1.150`, Sub1 is `192.168.1.151`, and Sub2 is `192.168.1.152`
 ```
@@ -85,4 +85,19 @@ static domain_name_servers=192.168.x.x    same with above
 And save the file use `control + x`(Nano editor save key)
 ```
 sudo reboot                                save and reboot
+```
+
+**5. Wi-Fi Configuration**
+
+If you want to set the value of Wi-Fi ID and password before putting Raspi in place, here is solution
+```
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf                 open setting script
+```
+Add below code on script
+```
+network={
+        ssid="xxxxxx"                      enter Wi-Fi ID
+        psk="xxxxxx"                       enter Wi-Fi password
+        key_mgmt=WPA-PSK
+}
 ```
