@@ -101,3 +101,7 @@ network={
         key_mgmt=WPA-PSK
 }
 ```
+And save the file use `control + x`(Nano editor save key)
+```
+sudo reboot                                save and reboot
+```
