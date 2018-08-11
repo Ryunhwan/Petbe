@@ -89,7 +89,7 @@ sudo reboot                                save and reboot
 
 **5. Wi-Fi Configuration**
 
-If you want to set the value of Wi-Fi ID and password before putting Raspi in place, here is solution
+If you want to set the value of Wi-Fi ID and password before putting Raspi in place, here is the solution
 ```
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf                 open setting script
 ```
