@@ -70,7 +70,7 @@ sudo chmod +x /home/pi/iBeacon-Scanner-/testblescan.py            add execute pe
 
 Raspies are have to connected with one router, so I set a static IP address for each Raspi
 
-Main(server): `192.168.1.150`, Sub1 is `192.168.1.151`, and Sub2 is `192.168.1.152`
+Main(server): `192.168.5.150`, Sub1 is `192.168.5.151`, and Sub2 is `192.168.5.152`
 ```
 netstat -nr                               check the router address
 sudo nano /etc/dhcpcd.conf                open setting script
